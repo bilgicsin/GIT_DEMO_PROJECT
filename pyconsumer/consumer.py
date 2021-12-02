@@ -6,7 +6,7 @@ import pymysql
 #from pymysql import escape_string
 
 mydb = mysql.connector.connect(
-  host="localhost",
+  host="mysqldb",
   user="demo_user",
   password="demo_user",
   database="demodb"
@@ -17,7 +17,7 @@ mycursor.execute("CREATE TABLE IF NOT EXISTS demo_table (ts VARCHAR(255), log_le
 
 consumer = KafkaConsumer(
     'git-demo-topic',
-     bootstrap_servers=['localhost:9092'],
+     bootstrap_servers=['kafka:9094'],
      auto_offset_reset='earliest',
      enable_auto_commit=True,
      value_deserializer=lambda x: loads(x.decode('utf-8')))
@@ -29,6 +29,5 @@ for record in consumer:
         "insert into demo_table"
         "(ts,log_level,city,message)"
         "values (%(ts)s, %(city)s, %(log_level)s, %(message)s)")
-    print(transaction_sql)
     mycursor.execute(transaction_sql, record)
     mydb.commit()
