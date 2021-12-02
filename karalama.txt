@@ -1,0 +1,36 @@
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=indeed -d mysql:tag
+
+/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9094 --topic git-demo-topic --from-beginning
+
+/opt/bitnami/kafka/bin/kafka-console-consumer.sh --from-beginning --bootstrap-server kafka:9092 --property print.key=true --property print.value=false --property print.partition --topic deneme1 | tail -n 10|grep "Msg Count="
+
+
+
+/opt/bitnami/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic deneme3
+
+wsl -d docker-desktop
+sysctl -w vm.max_map_count=262144
+
+
+http://localhost:5601/app/dashboards#/view/99238a10-5141-11ec-9327-251facdf5439?_g=(filters:!(),refreshInterval:(pause:!f,value:1000),time:(from:now-15m,to:now))
+
+
+
+curl -X POST localhost:5601/api/kibana/dashboards/import -H 'kbn-xsrf:true' -H -d @CityCountDashBoard.ndjson
+
+curl -X POST "localhost:5601/api/saved_objects/_import -H "kbn-xsrf: true" --form file=@file.ndjson" -H 'kbn-xsrf: true'
+
+
+curl -X POST elk:5601/api/saved_objects/_import -H "kbn-xsrf: true" --form file=@CityCountDashBoard.ndjson
+
+curl -X GET elk:9200/git-demo-topic
+
+docker cp ./elk/DashBoardImport.sh a4510adc8e3e://etc/elasticsearch/DashBoardImport.sh
+
+./DashBoardImport.sh /etc/elasticsearch/DashBoardImport.sh
+
+
+Running import dashboard..
+curl: (7) Failed to connect to elk port 5601: Connection refused
+
+{"successCount":2,"success":true,"warnings":[],"successResults":[{"type":"index-pattern","id":"4f40db10-5140-11ec-9327-251facdf5439","meta":{"title":"git-demo-topic*","icon":"indexPatternApp"}},{"type":"dashboard","id":"99238a10-5141-11ec-9327-251facdf5439","meta":{"title":"City Count Total","icon":"d
