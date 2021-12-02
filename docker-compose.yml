@@ -45,6 +45,12 @@ services:
       - kafka
     networks:
       - demo-tier
+  pyconsumer:
+    build: ./pyconsumer/
+    depends_on:
+      - mysqldb
+    networks:
+      - demo-tier
   elk:
     build: './elk/'
     ports:
@@ -67,7 +73,7 @@ services:
       - elk
     networks:
       - demo-tier
-  db:
+  mysqldb:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
