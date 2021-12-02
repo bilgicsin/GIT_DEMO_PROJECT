@@ -67,3 +67,20 @@ services:
       - elk
     networks:
       - demo-tier
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: demo_user
+      MYSQL_USER: demo_user
+      MYSQL_PASSWORD: demo_user
+      MYSQL_DATABASE: demodb
+    depends_on:
+      - pyproducer
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    networks:
+      - demo-tier
