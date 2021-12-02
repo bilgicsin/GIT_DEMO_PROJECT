@@ -39,8 +39,8 @@ services:
       - zookeeper
     networks:
       - demo-tier
-  python:
-    build: ./python/
+  pyproducer:
+    build: ./pyproducer/
     depends_on:
       - kafka
     networks:
@@ -58,7 +58,7 @@ services:
       - '9200'
       - '9300'
     depends_on:
-      - python
+      - pyproducer
     networks:
       - demo-tier
   kibana-check:
