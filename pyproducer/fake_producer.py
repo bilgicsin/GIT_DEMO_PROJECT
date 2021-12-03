@@ -33,7 +33,7 @@ while True:
               'ts':   datetime.now().isoformat(sep=' ', timespec='milliseconds'),
               'log_level':fake.log_level(),
               'city':city,
-              'message':'Hello-from-' + city
+              'detail':'Hello-from-' + city
               }
 
       producer.send('git-demo-topic', value=message)
