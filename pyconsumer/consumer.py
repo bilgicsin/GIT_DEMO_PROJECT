@@ -4,16 +4,24 @@ import json
 import mysql.connector
 import pymysql
 #from pymysql import escape_string
+from time import sleep
 
-mydb = mysql.connector.connect(
-  host="mysqldb",
-  user="demo_user",
-  password="demo_user",
-  database="demodb"
+mydb = None
+while mydb is None:
+    try:
+        mydb = mysql.connector.connect(
+        host="mysqldb",
+        user="demo_user",
+        password="demo_user",
+        database="demodb"
 )
+    except:
+         print('demodb database is not ready yet!')
+         sleep(10)
+         pass
 
 mycursor = mydb.cursor()
-mycursor.execute("CREATE TABLE IF NOT EXISTS demo_table (ts VARCHAR(255), log_level VARCHAR(255), city VARCHAR(255), message VARCHAR(255))")
+mycursor.execute("CREATE TABLE IF NOT EXISTS demo_table (ts VARCHAR(255), log_level VARCHAR(255), city VARCHAR(255), detail VARCHAR(255))")
 
 consumer = KafkaConsumer(
     'git-demo-topic',
@@ -27,7 +35,7 @@ for record in consumer:
     recordj = json.dumps(record)
     transaction_sql = (
         "insert into demo_table"
-        "(ts,log_level,city,message)"
-        "values (%(ts)s, %(city)s, %(log_level)s, %(message)s)")
+        "(ts,log_level,city,detail)"
+        "values (%(ts)s, %(city)s, %(log_level)s, %(detail)s)")
     mycursor.execute(transaction_sql, record)
     mydb.commit()

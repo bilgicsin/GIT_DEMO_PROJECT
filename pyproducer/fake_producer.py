@@ -6,14 +6,15 @@ from kafka import KafkaProducer
 from time import sleep
 from json import dumps
 
-NumberOfRecordsPerSecond = 100                         
-producer = 1
-while producer is 1:
+NumberOfRecordsPerSecond = 100
+producer = None
+while producer is None:
     try:
         producer = KafkaProducer(bootstrap_servers=['kafka:9094'],
                                  value_serializer=lambda x:
                                  dumps(x).encode('utf-8'))
     except:
+         print('Kafka is not ready yet!')
          sleep(10)
          pass
 
@@ -28,14 +29,15 @@ fake.add_provider(log_level_provider)
 
 while True:
     for i in range(NumberOfRecordsPerSecond):
-      city= fake.city() #city ve message alanlarında aynı random şehir isminin gelmesi için eklendi.
-      message= {
+      city= fake.city() #city ve detail alanlarında aynı random şehir isminin gelmesi için eklendi.
+      record= {
               'ts':   datetime.now().isoformat(sep=' ', timespec='milliseconds'),
               'log_level':fake.log_level(),
               'city':city,
               'detail':'Hello-from-' + city
               }
 
-      producer.send('git-demo-topic', value=message)
+      producer.send('git-demo-topic', value=record)
+      print(record)
       producer.flush()
     sleep(1)
