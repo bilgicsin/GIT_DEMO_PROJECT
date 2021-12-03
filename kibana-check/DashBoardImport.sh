@@ -3,8 +3,6 @@
 while true
 do
     response=$(curl -X POST elk:5601/api/saved_objects/_import -H "kbn-xsrf: true" --form file=@/CityCountDashBoard.ndjson | grep -oE "^\{\"success")
-	#curl -X GET elk:9200/git-demo-topic | grep -oE "^\{\"git"  > /dev/null
-	#match=$?
 	echo $response
     if [ '{"success' = $response ]
         then
