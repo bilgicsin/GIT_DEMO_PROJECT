@@ -39,3 +39,6 @@ curl: (7) Failed to connect to elk port 5601: Connection refused
 bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
 
 bootstrap check failure [1] of [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+
+
+http://localhost:5601/app/dashboards#/view/46c98770-5442-11ec-9c75-35056cad2234?_g=(filters:!(),refreshInterval:(pause:!f,value:1000),time:(from:now-15m,to:now))
